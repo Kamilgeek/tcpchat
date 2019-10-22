@@ -1,15 +1,7 @@
 from socket import AF_INET, socket, SOCK_STREAM
 from threading import Thread
 
-clients = {}
-addresses = {}
 
-HOST = ''
-PORT = 33000
-BUFSIZ = 1024
-ADDR = (HOST, PORT)
-SERVER = socket(AF_INET, SOCK_STREAM)
-SERVER.bind(ADDR)
 
 def accept_incoming_connections():
 	"""Sets unp handing for incoming clients."""
@@ -41,6 +33,18 @@ def handle_client(client):
 def broadcast(msg, prefix=""):
 	for sock in clients:
 		sock.send(bytes(prefix, "utf8")+msg)
+
+clients = {}
+addresses = {}
+
+HOST = ''
+PORT = 33000
+BUFSIZ = 1024
+ADDR = (HOST, PORT)
+SERVER = socket(AF_INET, SOCK_STREAM)
+SERVER.bind(ADDR)
+
+
 if __name__ == "__main__":
 	SERVER.listen(5)
 	print("waiting for connection..")
